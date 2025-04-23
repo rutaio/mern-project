@@ -21,7 +21,7 @@ exports.createTodo = async (req, res) => {
   }
 };
 
-// PATCH or PUT?
+// PUT - works on postman :)
 exports.updateTodo = async (req, res) => {
   try {
     const id = req.params.id;
