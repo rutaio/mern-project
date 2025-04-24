@@ -12,12 +12,18 @@ exports.getAllTodos = async (req, res) => {
 
 // POST - works on postman :)
 exports.createTodo = async (req, res) => {
+  const { name, description, status } = req.body;
+
+  if (!name || !description || !status) {
+    return res.status(400).json({ error: 'All fiels are required' });
+  }
+
   try {
-    const newTodo = new Todo(req.body);
+    const newTodo = new Todo({ name, description, status });
     await newTodo.save();
     res.status(201).json({ message: 'Todo created successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message });
   }
 };
 

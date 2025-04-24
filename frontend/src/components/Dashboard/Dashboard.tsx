@@ -1,10 +1,20 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import './dashboard.css';
 import { AuthContext } from '../../context/AuthContext';
 import { TodoWrapper } from '../Todos/TodoWrapper';
+import { TodoForm } from '../Todos/TodoForm';
+import { Todo } from '../../types/types';
 
 export const Dashboard = () => {
   const { user } = useContext(AuthContext);
+  
+  // new:
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  // new:
+  const addTodo = (todo: Todo) => {
+    setTodos([...todos, todo]);
+  };
 
   return (
     <div className="dashboard-container">
@@ -23,15 +33,19 @@ export const Dashboard = () => {
             <p>
               <strong>Email:</strong> {user?.email}
             </p>
-            <p>
-              <strong>Role:</strong> {user?.role}
-            </p>
+          </div>
+        </div>
+        <div className="dashboard-card">
+          <h3>Add Todo</h3>
+          <div className="todo-form">
+          <TodoForm addTodo={addTodo} />
           </div>
         </div>
         <div className="dashboard-card">
           <h3>Todos</h3>
           <div className="todo-info">
             <TodoWrapper />
+            {/*   <TodoWrapper todos={todos} />*/}
           </div>
         </div>
       </div>

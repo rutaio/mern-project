@@ -1,15 +1,12 @@
-// Auth Context - bus atsakingas uz zmogaus autentifikacija, laikys funkcijas bei state
-
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { API_URL } from '../constants/global';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../constants/global';
 
 interface User {
-  _id: string;
+  id: string;
   name: string;
   email: string;
-  // ar cia nereikia nurodyti? password: string;
   role: string;
 }
 
@@ -62,9 +59,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             },
           };
 
-          const response = await axios.get(`${API_URL}/auth/user`, config);
+          const res = await axios.get(`${API_URL}/auth/user`, config);
 
-          setUser(response.data);
+          setUser(res.data);
           setIsAuthenticated(true);
         } catch (error) {
           console.log(error);
@@ -81,24 +78,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loadUser();
   }, [token]);
 
-  // REGISTER
   const register = async (name: string, email: string, password: string) => {
     try {
       setError(null);
       setIsLoading(true);
 
-      const response = await axios.post(`${API_URL}/auth/register`, {
+      const res = await axios.post(`${API_URL}/auth/register`, {
         name,
         email,
         password,
       });
 
-      localStorage.setItem('access_token', response.data.access_token);
-      setToken(response.data.access_token);
-      setUser(response.data.user);
+      localStorage.setItem('access_token', res.data.access_token);
+      setToken(res.data.access_token);
+      setUser(res.data.user);
       setIsAuthenticated(true);
       navigate('/dashboard');
-    } catch (error) {
+    } catch (error: unknown) {
       const errorMessage =
         axios.isAxiosError(error) && error.response?.data?.error
           ? error.response.data.error
@@ -109,23 +105,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  // LOGIN
   const login = async (email: string, password: string) => {
     try {
       setError(null);
       setIsLoading(true);
 
-      const response = await axios.post(`${API_URL}/auth/login`, {
+      const res = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
       });
 
-      localStorage.setItem('access_token', response.data.access_token);
-      setToken(response.data.access_token);
-      setUser(response.data.user);
+      localStorage.setItem('access_token', res.data.access_token);
+      setToken(res.data.access_token);
+      setUser(res.data.user);
       setIsAuthenticated(true);
       navigate('/dashboard');
-    } catch (error) {
+    } catch (error: unknown) {
       const errorMessage =
         axios.isAxiosError(error) && error.response?.data?.error
           ? error.response.data.error

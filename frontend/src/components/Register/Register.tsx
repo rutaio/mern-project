@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
+import './register.css';
 import { Link } from 'react-router-dom';
-import './Register.css';
 import { AuthContext } from '../../context/AuthContext';
 
 export const Register = () => {
@@ -13,16 +13,15 @@ export const Register = () => {
   const { register } = useContext(AuthContext);
 
   const validateForm = () => {
-    // nuresettinam:
     setPasswordError('');
 
-    // Patikriname ar slaptazodziai sutampa:
+    // Patikriname ar slaptazodziai sutampa
     if (password !== confirmPassword) {
       setPasswordError('Slaptazodziai nesutampa');
       return false;
     }
 
-    // tikriname ar slaptazodis yra bent sesiu simboliu ilgio:
+    // Tikriname ar slaptazodis yra bent 6 simboliu ilgio
     if (password.length < 6) {
       setPasswordError('Slaptazodis yra per trumpas');
       return false;
@@ -55,8 +54,9 @@ export const Register = () => {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="email">El.pastas</label>
+            <label htmlFor="name">Email</label>
             <input
               type="text"
               id="email"
@@ -65,8 +65,9 @@ export const Register = () => {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="password">Slaptazodis</label>
+            <label htmlFor="name">Password</label>
             <input
               type="password"
               id="password"
@@ -75,11 +76,12 @@ export const Register = () => {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="name">Pakartokite Slaptazodi</label>
+            <label htmlFor="name">Confirm Password</label>
             <input
               type="password"
-              id="confirm-password"
+              id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required

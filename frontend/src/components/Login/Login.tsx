@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
+import '../Register/register.css';
 import { Link } from 'react-router-dom';
-import '../Register/Register.css';
 import { AuthContext } from '../../context/AuthContext';
 
 export const Login = () => {
@@ -22,7 +22,7 @@ export const Login = () => {
 
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
-            <label htmlFor="email">Your Email</label>
+            <label htmlFor="name">Email</label>
             <input
               type="text"
               id="email"
@@ -31,8 +31,9 @@ export const Login = () => {
               required
             />
           </div>
+
           <div className="form-group">
-            <label htmlFor="password">Your Password</label>
+            <label htmlFor="name">Password</label>
             <input
               type="password"
               id="password"
@@ -48,7 +49,7 @@ export const Login = () => {
         </form>
 
         <div className="login-link">
-          Neturite paskyros? <Link to="/register">Registruokies</Link>
+          Neturite paskyros? <Link to="/register">Registruokites</Link>
         </div>
       </div>
     </div>
