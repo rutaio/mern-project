@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import './todo-form.css';
 import axios from 'axios';
-import { API_URL } from '../../constants/global';
-import { Todo } from '../../types/types';
+import { API_URL } from '../../../constants/global';
+import { Todo } from '../../../types/types';
 
 interface TodoFormProps {
   addTodo: (todo: Todo) => void;
@@ -9,14 +10,13 @@ interface TodoFormProps {
 
 // kai bus pridetas naujas todo elementas, jis bus issiustas tevui:
 export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
-  const [value, setValue] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [status, setStatus] = useState<string>('');
 
-  // siunciu duomenis:
+  // siunciu duomenis, kai yra uzpildoma forma:
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+    event?.preventDefault();
 
     // jei yra reiksme, issiuncia ja i teva:
     if (name || description || status) {
@@ -32,7 +32,10 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
           status: status,
         };
         addTodo(newTodo);
-        setValue('');
+        // resettinu forma:
+        setName('');
+        setDescription('');
+        setStatus('');
       } catch (error) {
         // idedame atejusi error:
         if (axios.isAxiosError(error)) {
@@ -50,7 +53,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   return (
     <form className="TodoForm" onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="name">Pavadinimas</label>
+        <label htmlFor="name">Name your todo:</label>
         <input
           type="text"
           id="name"
@@ -61,7 +64,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="description">Aprasymas</label>
+        <label htmlFor="description">Describe details:</label>
         <input
           type="text"
           id="description"
@@ -72,13 +75,13 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="rating">Statusas</label>
+        <label htmlFor="rating">Status:</label>
         <input
           type="text"
           id="status"
           required
           value={status}
-          placeholder="baigta ar nebaigta?"
+          placeholder="finished or not?"
           onChange={(event) => setStatus(event.target.value)}
         />
       </div>

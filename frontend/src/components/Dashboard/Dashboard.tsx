@@ -2,16 +2,15 @@ import { useContext, useState } from 'react';
 import './dashboard.css';
 import { AuthContext } from '../../context/AuthContext';
 import { TodoWrapper } from '../Todos/TodoWrapper';
-import { TodoForm } from '../Todos/TodoForm';
+import { TodoForm } from '../Todos/TodoForm/TodoForm';
 import { Todo } from '../../types/types';
 
 export const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  
-  // new:
+
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  // new:
+  // sukuriame array su pries tai buvusia ir naujausia info:
   const addTodo = (todo: Todo) => {
     setTodos([...todos, todo]);
   };
@@ -38,14 +37,13 @@ export const Dashboard = () => {
         <div className="dashboard-card">
           <h3>Add Todo</h3>
           <div className="todo-form">
-          <TodoForm addTodo={addTodo} />
+            <TodoForm addTodo={addTodo} />
           </div>
         </div>
         <div className="dashboard-card">
           <h3>Todos</h3>
           <div className="todo-info">
             <TodoWrapper />
-            {/*   <TodoWrapper todos={todos} />*/}
           </div>
         </div>
       </div>

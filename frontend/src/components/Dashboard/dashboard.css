@@ -46,37 +46,6 @@
   color: #555;
 }
 
-.quick-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.action-button {
-  background-color: #f1f3f4;
-  border: none;
-  border-radius: 4px;
-  padding: 12px 15px;
-  text-align: left;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.action-button:hover {
-  background-color: #e8eaed;
-  transform: translateY(-2px);
-}
-
-.admin-action {
-  background-color: #d7e7fa;
-  color: #1a73e8;
-}
-
-.admin-action:hover {
-  background-color: #c4dbf9;
-}
-
 @media (max-width: 768px) {
   .dashboard-content {
     grid-template-columns: 1fr;
