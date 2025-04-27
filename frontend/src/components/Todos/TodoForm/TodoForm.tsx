@@ -86,9 +86,7 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
         />
       </div>
 
-      <button type="submit" className="todo-btn">
-        Add Todo
-      </button>
+      <button type="submit">Add Todo</button>
     </form>
   );
 };

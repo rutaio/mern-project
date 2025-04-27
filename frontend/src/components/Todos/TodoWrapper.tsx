@@ -43,6 +43,16 @@ export const TodoWrapper = () => {
     }
   };
 
+  const handleDelete = async (todoForDeletionId: string) => {
+    try {
+      await axios.delete(`${API_URL}/todos/${todoForDeletionId}`);
+      // isfiltruok todos sarasa, surask trinama todo ir grazink sarasa be trinamo todo:
+      setTodos(todos.filter((todo) => todo._id !== todoForDeletionId));
+    } catch (error) {
+      console.error('Error in deleting todo:', error);
+    }
+  };
+
   return (
     <div className="TodoWrapper">
       {/* eina per visa todo sarasa ir sukuria kiekvienam todo po kortele (TodoItem.tsx): */}
@@ -60,7 +70,12 @@ export const TodoWrapper = () => {
         ) : (
           // jei todo nera redaguojamas, rodome iprasta sarasa todos:
           // cia yra nurodyta funkcija tuo atveju, jei konkretus todo butu paspaustas redaguoti:
-          <TodoItem key={todo._id} todo={todo} onEdit={handleEditClick} />
+          <TodoItem
+            key={todo._id}
+            todo={todo}
+            onEdit={handleEditClick}
+            onDelete={handleDelete}
+          />
         )
       )}
     </div>

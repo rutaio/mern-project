@@ -6,9 +6,10 @@ import './todo-item.css';
 interface TodoProps {
   todo: Todo;
   onEdit: (_id: string) => void;
+  onDelete: (_id: string) => void;
 }
 
-export const TodoItem: React.FC<TodoProps> = ({ todo, onEdit }) => {
+export const TodoItem: React.FC<TodoProps> = ({ todo, onEdit, onDelete }) => {
   return (
     <>
       <div className="todo-card">
@@ -17,7 +18,7 @@ export const TodoItem: React.FC<TodoProps> = ({ todo, onEdit }) => {
         <h6>{todo.status}</h6>
         <div className="todo-actions">
           <button onClick={() => onEdit(todo._id)}>edit</button>
-          <button>delete</button>
+          <button onClick={() => onDelete(todo._id)}>delete</button>
         </div>
       </div>
     </>
