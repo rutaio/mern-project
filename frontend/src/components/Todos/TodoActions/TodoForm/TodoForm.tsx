@@ -4,8 +4,9 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { API_URL } from '../../../constants/global';
-import { Todo } from '../../../types/types';
+import { API_URL } from '../../../../constants/global';
+import { Todo } from '../../../../types/types';
+import './todo-form.css';
 
 interface TodoFormProps {
   addTodo: (todo: Todo) => void;
@@ -57,38 +58,39 @@ export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
 
   return (
     <form className="TodoForm" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Name your todo:</label>
-        <input
-          type="text"
-          id="name"
-          required
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </div>
+      <div className="inputs-container">
+        <div className="form-group">
+          <input
+            placeholder="Name your todo:"
+            type="text"
+            id="name"
+            required
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="description">Describe details:</label>
-        <input
-          type="text"
-          id="description"
-          required
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        />
-      </div>
+        <div className="form-group">
+          <input
+            placeholder="Finished or not?"
+            type="text"
+            id="status"
+            required
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+          />
+        </div>
 
-      <div className="form-group">
-        <label htmlFor="rating">Status:</label>
-        <input
-          type="text"
-          id="status"
-          required
-          value={status}
-          placeholder="finished or not?"
-          onChange={(event) => setStatus(event.target.value)}
-        />
+        <div className="form-group">
+          <input
+            placeholder="Describe details:"
+            type="text"
+            id="description"
+            required
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+        </div>
       </div>
 
       <button type="submit">Add Todo</button>

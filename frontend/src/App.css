@@ -18,7 +18,7 @@ body {
 }
 
 button {
-  background-color: #4285f4;
+  background-color: #40d5dd;
   color: white;
   border: none;
   border-radius: 4px;
@@ -30,5 +30,5 @@ button {
 }
 
 button:hover {
-  background-color: #3367d6;
+  background-color: #3bb8bf;
 }

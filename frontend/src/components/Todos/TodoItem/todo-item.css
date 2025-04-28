@@ -1,8 +1,18 @@
 .todo-card {
+  background: white;
   border: 1px solid rgba(0, 0, 255, 0.213);
   border-radius: 6px;
   padding: 12px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.todo-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .todo-actions button {

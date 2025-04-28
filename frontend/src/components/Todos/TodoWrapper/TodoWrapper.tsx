@@ -1,9 +1,9 @@
 // sis komponentas egzistuoja su tikslu - parodyti sarasa todos
 
 import { useState } from 'react';
-import { TodoItem } from './TodoItem/TodoItem';
-import { Todo } from '../../types/types';
-import { EditTodoItem } from './TodoActions/EditTodo';
+import { TodoItem } from '../TodoItem/TodoItem';
+import { Todo } from '../../../types/types';
+import { EditTodoItem } from '../TodoActions/EditTodo/EditTodo';
 
 interface TodoWrapperProps {
   todos: Todo[]; // priimu todos kaip propsa
@@ -26,11 +26,12 @@ export const TodoWrapper: React.FC<TodoWrapperProps> = ({
 
   const handleSave = (updatedTodo: Todo) => {
     updateTodo(updatedTodo);
+    // resettinu:
     setEditTodoId(null);
   };
 
   return (
-    <div className="TodoWrapper">
+    <div className="todo-wrapper">
       {/* eina per visa todo sarasa ir sukuria kiekvienam todo po kortele (TodoItem.tsx): */}
       {todos.map((todo) =>
         // cia prasideda ternary operator, kurio reikia, kad suprastume ar pasirinktas todo yra in edit mode ar yra tiesiog iprastas todo:

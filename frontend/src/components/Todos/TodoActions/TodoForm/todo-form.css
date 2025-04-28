@@ -1,0 +1,15 @@
+.inputs-container {
+  display: flex;
+}
+
+.form-group {
+  padding: 0 10px 10px 0;
+ 
+}
+
+@media (max-width: 768px) {
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

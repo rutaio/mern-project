@@ -11,16 +11,18 @@ interface TodoProps {
 
 export const TodoItem: React.FC<TodoProps> = ({ todo, onEdit, onDelete }) => {
   return (
-    <>
+    <div className="todo-wrapper">
       <div className="todo-card">
-        <h3>{todo.name}</h3>
+        <div className="todo-hero">
+          <h3>{todo.name}</h3>
+          <h6>{todo.status}</h6>
+        </div>
         <p>{todo.description}</p>
-        <h6>{todo.status}</h6>
         <div className="todo-actions">
-          <button onClick={() => onEdit(todo._id)}>edit</button>
-          <button onClick={() => onDelete(todo._id)}>delete</button>
+          <button onClick={() => onEdit(todo._id)}>Edit</button>
+          <button onClick={() => onDelete(todo._id)}>Delete</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };

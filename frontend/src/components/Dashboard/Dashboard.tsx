@@ -1,12 +1,12 @@
-// sis komponentas egzistuoja su tikslu - priimti info is vaiku: per addTodo funkcija suzino apie naujus todos ir perduoda sia info TodoWrapper
+// sis komponentas egzistuoja su tikslu - uz API calls ir priimti info is vaiku: per addTodo funkcija suzino apie naujus todos ir perduoda sia info TodoWrapper
 
 import { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../constants/global';
 import './dashboard.css';
 import { AuthContext } from '../../context/AuthContext';
-import { TodoWrapper } from '../Todos/TodoWrapper';
-import { TodoForm } from '../Todos/TodoActions/TodoForm';
+import { TodoWrapper } from '../Todos/TodoWrapper/TodoWrapper';
+import { TodoForm } from '../Todos/TodoActions/TodoForm/TodoForm';
 import { Todo } from '../../types/types';
 
 export const Dashboard = () => {
@@ -33,6 +33,8 @@ export const Dashboard = () => {
   // // addTodo ateina is TodoForm
   const addTodo = (newTodo: Todo) => {
     // pakeicia todos busena cia Dashboard (ir nusius sia info i TodoWrapper)
+    // [...] (Spread Operator) - tai yra visi ankstesni todos
+    // grazina nauja array su ankstesniais ir naujais duomenimis:
     setTodos((prevTodos) => [...prevTodos, newTodo]);
     fetchTodos();
   };
@@ -41,7 +43,7 @@ export const Dashboard = () => {
   const updateTodo = async (updatedTodo: Todo) => {
     try {
       await axios.put(`${API_URL}/todos/${updatedTodo._id}`, updatedTodo);
-      // pereina per visa todo sarasa ir updatina mano paredaguota todo:
+      // pereina per visus todos, patikrina ar dabartinio todo ir mano redaguojamo todo id sutampa, ir updatina mano paredaguota todo su setTodos:
       setTodos(
         todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
       );
@@ -65,36 +67,21 @@ export const Dashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h1>Dashboard</h1>
-        <p className="welcome-text">Welcome back, {user?.name}!</p>
+        <p className="welcome-text">Have a productive day, {user?.name}!</p>
       </div>
 
       <div className="dashboard-content">
-        <div className="dashboard-card">
-          <h3>Account Information</h3>
-          <div className="account-info">
-            <p>
-              <strong>Name:</strong> {user?.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {user?.email}
-            </p>
-          </div>
-        </div>
-        <div className="dashboard-card">
+        <div className="todo-form">
           <h3>Add Todo</h3>
-          <div className="todo-form">
-            <TodoForm addTodo={addTodo} />
-          </div>
+          <TodoForm addTodo={addTodo} />
         </div>
-        <div className="dashboard-card">
-          <h3>Todos</h3>
-          <div className="todo-info">
-            <TodoWrapper
-              todos={todos}
-              updateTodo={updateTodo}
-              deleteTodo={deleteTodo}
-            />
-          </div>
+
+        <div className="todo-wrapper">
+          <TodoWrapper
+            todos={todos}
+            updateTodo={updateTodo}
+            deleteTodo={deleteTodo}
+          />
         </div>
       </div>
     </div>

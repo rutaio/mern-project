@@ -28,7 +28,7 @@
 .navigation-logo span {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #63b3ed;
+  color: #40d5dd;
 }
 
 .navigation ul {
@@ -59,12 +59,12 @@
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #3182ce, #63b3ed);
+  background: linear-gradient(90deg, #40d5dd, #63b3ed);
   transition: width 0.2s ease-in-out;
 }
 
 .navigation a:hover {
-  color: #3182ce;
+  color: #2da4aa;
 }
 
 .navigation a:hover::after {
@@ -72,7 +72,7 @@
 }
 
 .navigation .active {
-  color: #3182ce;
+  color: #34aab1;
   background-color: #ebf8ff;
 }
 
