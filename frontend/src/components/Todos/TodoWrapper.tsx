@@ -1,56 +1,32 @@
-// sis komponentas egzistuoja su tikslu - valdyti todo sarasa ir API calls.
+// sis komponentas egzistuoja su tikslu - parodyti sarasa todos
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_URL } from '../../constants/global';
+import { useState } from 'react';
 import { TodoItem } from './TodoItem/TodoItem';
 import { Todo } from '../../types/types';
 import { EditTodoItem } from './TodoActions/EditTodo';
 
-export const TodoWrapper = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+interface TodoWrapperProps {
+  todos: Todo[]; // priimu todos kaip propsa
+  updateTodo: (updatedTodo: Todo) => void; // ateina is tevo
+  deleteTodo: (id: string) => void; //  ateina is tevo
+}
+
+// todos ateina is Dashboard:
+export const TodoWrapper: React.FC<TodoWrapperProps> = ({
+  todos,
+  updateTodo,
+  deleteTodo,
+}) => {
   const [editTodoId, setEditTodoId] = useState<string | null>(null);
-
-  // atsisiunciu visus todos:
-  useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/todos`);
-        setTodos(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchTodos();
-  }, []);
 
   // pradedu redaguoti sita todo frontende:
   const handleEditClick = (_id: string) => {
     setEditTodoId(_id);
   };
 
-  const handleSave = async (updatedTodo: Todo) => {
-    try {
-      await axios.put(`${API_URL}/todos/${updatedTodo._id}`, updatedTodo);
-      // pereina per visa todo sarasa ir updatina mano paredaguota todo:
-      setTodos(
-        todos.map((todo) => (todo._id === updatedTodo._id ? updatedTodo : todo))
-      );
-      setEditTodoId(null);
-    } catch (error) {
-      console.error('Error updating todo:', error);
-    }
-  };
-
-  const handleDelete = async (todoForDeletionId: string) => {
-    try {
-      await axios.delete(`${API_URL}/todos/${todoForDeletionId}`);
-      // isfiltruok todos sarasa, surask trinama todo ir grazink sarasa be trinamo todo:
-      setTodos(todos.filter((todo) => todo._id !== todoForDeletionId));
-    } catch (error) {
-      console.error('Error in deleting todo:', error);
-    }
+  const handleSave = (updatedTodo: Todo) => {
+    updateTodo(updatedTodo);
+    setEditTodoId(null);
   };
 
   return (
@@ -74,7 +50,7 @@ export const TodoWrapper = () => {
             key={todo._id}
             todo={todo}
             onEdit={handleEditClick}
-            onDelete={handleDelete}
+            onDelete={deleteTodo}
           />
         )
       )}

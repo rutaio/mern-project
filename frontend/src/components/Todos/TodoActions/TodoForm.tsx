@@ -1,5 +1,8 @@
+// sis komponentas egzistuoja su tikslais:
+// 1. valdyti todo forma ir issiusti POST request i backend, kad sukurtu nauja todo.
+// 2. informuoti teva Dashboard apie nauja todo per siunciama addTodo funkcija.
+
 import { useState } from 'react';
-import './todo-form.css';
 import axios from 'axios';
 import { API_URL } from '../../../constants/global';
 import { Todo } from '../../../types/types';
@@ -8,36 +11,38 @@ interface TodoFormProps {
   addTodo: (todo: Todo) => void;
 }
 
-// kai bus pridetas naujas todo elementas, jis bus issiustas tevui:
+// priima addTodo funkcija is tevo; kai bus pridetas naujas todo elementas, jis bus issiustas tevui:
 export const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [status, setStatus] = useState<string>('');
 
-  // siunciu duomenis, kai yra uzpildoma forma:
+  // POST - siunciu duomenis, kai yra uzpildoma forma:
   const handleSubmit = async (event: React.FormEvent) => {
     event?.preventDefault();
 
     // jei yra reiksme, issiuncia ja i teva:
     if (name || description || status) {
       try {
-        await axios.post(`${API_URL}/todos`, {
-          name: name,
-          description: description,
-          status: status,
+        // siunciu uzklausa i teva:
+        const response = await axios.post(`${API_URL}/todos`, {
+          name,
+          description,
+          status,
         });
-        const newTodo: Todo = {
-          name: name,
-          description: description,
-          status: status,
-        };
+
+        // kai atsakymas sekmingai gautas, pridedama nauja todo i teva:
+        const newTodo: Todo = response.data;
+
+        // pridedu nauja todo i teva Dashboard:
         addTodo(newTodo);
+
         // resettinu forma:
         setName('');
         setDescription('');
         setStatus('');
       } catch (error) {
-        // idedame atejusi error:
+        // jei ivyko klaida, isveda atejusi klaidos pranesima:
         if (axios.isAxiosError(error)) {
           // einu gilyn per objektus:
           const errorMessage =
